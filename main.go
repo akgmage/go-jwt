@@ -1,7 +1,9 @@
 package main
 
 import (
+	routes "go-jwt/routes"
 	"os"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,4 +15,7 @@ func main() {
 	}
 	router := gin.New()
 	router.Use(gin.Logger())
+
+	routes.AuthRoutes(router)
+	routes.UserRoutes(router)
 }
