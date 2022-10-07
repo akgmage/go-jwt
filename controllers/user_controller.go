@@ -36,5 +36,7 @@ func GetUser() gin.HandlerFunc{
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		var ctx, cancel = context.WithTimeout(context.Background(), 100 * time.Second) 
+		var user models.User
 	}
 }
