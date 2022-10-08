@@ -24,7 +24,16 @@ func HashPassword()
 
 func VerifyPassword()
 
-func Signup()
+func Signup() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		vat ctx, cancel = context.WithTimeout(context.Backgrounnd(), 100*time.Second)
+		var user models.User
+		if err := c.BindJSON(&user); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+	}
+}
 
 func Login()
 
