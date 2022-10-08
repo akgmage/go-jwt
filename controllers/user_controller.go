@@ -39,6 +39,12 @@ func GetUser() gin.HandlerFunc{
 		}
 		var ctx, cancel = context.WithTimeout(context.Background(), 100 * time.Second) 
 		var user models.User
-		userCollection.FindOne(ctx, bson.M{"user_id":userId}).Decode(&user)
+		err := userCollection.FindOne(ctx, bson.M{"user_id":userId}).Decode(&user)
+		defer cancel()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, user)
 	}
 }
