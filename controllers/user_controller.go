@@ -37,6 +37,11 @@ func Signup() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		count, err := userCollection.CountDocuments(ctx, bson.M{"email":user.Email})
+		if err != nil {
+			log.Panic(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occured"})
+		}
 	}
 }
 
