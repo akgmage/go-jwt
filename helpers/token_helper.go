@@ -1,18 +1,12 @@
 package helpers
 
 import (
-	"context"
-	"fmt"
-	"log"
 	"os"
 	"time"
 
 	"github.com/akgmage/go-jwt/database"
 	jwt "github.com/dgrijalva/jwt-go"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type SignedDetails struct {
@@ -40,7 +34,7 @@ func GenerateAllTokens(email string, firstName string, lastname string, userType
 	}
 	refreshClaims := &SignedDetails{
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(24)).Unix(),
+			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(168)).Unix(),
 		},
 	}
 }
