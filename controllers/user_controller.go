@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	helper "go-jwt/helpers"
 	"go-jwt/models"
 	"log"
@@ -57,7 +58,12 @@ func Signup() gin.HandlerFunc {
 		token, refreshToken, _ := helper.GenerateAllTokens(*user.Email, *user.First_name, *user.Last_name, *user.User_type, *&user.User_id)
 		user.Token  = &token
 		user.Refresh_token = &refreshToken
-		userCollection.InsertOne(ctx, user)
+		resultInsertionNUmber, insertErr := userCollection.InsertOne(ctx, user)
+		if insertErr != nil {
+			msg := fmt.Sprintf("User item was not created")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
 	}
 }
 
