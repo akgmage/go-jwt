@@ -85,6 +85,9 @@ func Login() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "email or password is incorrect"})
 			return
 		}
+
+		passwordIsValid, msg := VerifyPassword(*user.Password, *foundUser.Password)
+		defer cancel()
 	}
 }
 
