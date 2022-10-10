@@ -7,6 +7,7 @@ import (
 	"go-jwt/models"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/akgmage/go-jwt/database"
@@ -129,6 +130,12 @@ func GetUsers()	gin.HandlerFunc {
 		if err := helper.CheckUserType(c, "ADMIN"); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
+		}
+		var ctx, cancel = context.WithTimeout(context.Background(), 100 * time.Second)
+
+		recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
+		if err != nil || recordPerPage < 1 {
+			recordPerPage = 10
 		}
 		
 	}
