@@ -137,6 +137,10 @@ func GetUsers()	gin.HandlerFunc {
 		if err != nil || recordPerPage < 1 {
 			recordPerPage = 10
 		}
+		page, err1 := strconv.Atoi(c.Query("page"))
+		if err1 != nil || page < 1 {
+			page = 1
+		}
 		
 	}
 }						
