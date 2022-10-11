@@ -141,7 +141,13 @@ func GetUsers()	gin.HandlerFunc {
 		if err1 != nil || page < 1 {
 			page = 1
 		}
-		
+		startIndex := (page - 1) * recordPerPage
+		startIndex, err = strconv.Atoi(c.Query("startINdex"))
+		matchStage := bson.D{{"$match", bson.D{{}}}}
+		groupStage := bson.D{{"$group", bson.D{
+			{"_id", bson.D{{"_id", "null"}}}, 
+			{"total_count", bson.D{{"$sum", 1}}}, 
+			{"data", bson.D{{"$push", "$$ROOT"}}}}}}
 	}
 }						
 
