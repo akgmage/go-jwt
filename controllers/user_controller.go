@@ -159,6 +159,10 @@ func GetUsers()	gin.HandlerFunc {
 						matchStage, groupStage, projectStage})
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occured while listing user items"})
+		}
+		var allUsers []bson.M
+		if err = result.All(ctx, &allUsers); err != nil {
+			log.Fatal()
 		}			
 	}
 }						
