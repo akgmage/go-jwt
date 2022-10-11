@@ -143,6 +143,7 @@ func GetUsers()	gin.HandlerFunc {
 		}
 		startIndex := (page - 1) * recordPerPage
 		startIndex, err = strconv.Atoi(c.Query("startINdex"))
+		matchStage := bson.D{{"$match", bson.D{{}}}}
 	}
 }						
 
