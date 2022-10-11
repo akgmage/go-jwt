@@ -156,7 +156,15 @@ func GetUsers()	gin.HandlerFunc {
 				{"user_items", bson.D{
 					{"$slice", []interface{}{"$data", startIndex, recordPerPage}}}},}}}
 		result, err := userCollection.Aggregate(ctx, mongo.Pipeline{
-						matchStage, groupStage, projectStage})			
+						matchStage, groupStage, projectStage})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occured while listing user items"})
+		}
+		var allUsers []bson.M
+		if err = result.All(ctx, &allUsers); err != nil {
+			log.Fatal()
+		}	
+		c.JSON(http.StatusOK, allUsers[0])		
 	}
 }						
 
