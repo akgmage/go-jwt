@@ -149,6 +149,12 @@ func GetUsers()	gin.HandlerFunc {
 			{"_id", bson.D{{"_id", "null"}}}, 
 			{"total_count", bson.D{{"$sum", 1}}}, 
 			{"data", bson.D{{"$push", "$$ROOT"}}}}}}
+		projectStage := bson.D{
+			{"$project", bson.D{
+				{"_id", 0},
+				{"total_count", 1},
+				{"user_items", bson.D{
+					{"$slice", []interface{}{"$data", startIndex, recordPerPage}}}},}}}
 	}
 }						
 
