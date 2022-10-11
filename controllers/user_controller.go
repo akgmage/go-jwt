@@ -155,6 +155,8 @@ func GetUsers()	gin.HandlerFunc {
 				{"total_count", 1},
 				{"user_items", bson.D{
 					{"$slice", []interface{}{"$data", startIndex, recordPerPage}}}},}}}
+		result, err := userCollection.Aggregate(ctx, mongo.Pipeline{
+						matchStage, groupStage, projectStage})			
 	}
 }						
 
