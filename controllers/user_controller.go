@@ -141,7 +141,8 @@ func GetUsers()	gin.HandlerFunc {
 		if err1 != nil || page < 1 {
 			page = 1
 		}
-		
+		startIndex := (page - 1) * recordPerPage
+		startIndex, err = strconv.Atoi(c.Query("startINdex"))
 	}
 }						
 
