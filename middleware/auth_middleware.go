@@ -3,7 +3,7 @@ package middleware
 import (
 	"fmt"
 	"net/http"
-
+	helper "go-jwt/helpers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,6 +15,6 @@ func Authenticate() gin.HandlerFunc{
 			c.Abort()
 			return
 		}
-
+		claims, err := helper.ValidateToken(clientToken)
 	}
 }
