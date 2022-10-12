@@ -2,8 +2,9 @@ package middleware
 
 import (
 	"fmt"
-	"net/http"
 	helper "go-jwt/helpers"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +21,12 @@ func Authenticate() gin.HandlerFunc{
 			c.JSON(http.StatusInternalServerError, gin.H{"error":err})
 			c.Abort()
 			return
-		}
+		}	
+		c.Set("email", claims.Email)
+		c.Set("first_name", claims.First_name)
+		c.Set("last_name", claims.Last_name)
+		c.Set("uid", claims.Uid)
+		c.Set("user_type", claims.User_type)
+		c.Next()
 	}
 }
