@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"context"
+	"go/token"
 	"log"
 	"os"
 	"time"
@@ -50,6 +51,20 @@ func GenerateAllTokens(email string, firstName string, lastname string, userType
 		return
 	}
 	return token, refreshToken, err
+}
+
+func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
+	token, err := jwt.ParseWithClaims(
+		signedToken,
+		&SignedDetails{},
+		func(token *jwt.Token)(interface{}, error){
+			return []byte(SECRET_KEY), nil
+		},
+	)
+	if err != nil {
+		msg = err.Error()
+		return
+	}
 }
 
 func UpdateAllTokens(signedToken string, signedRefreshToken string, userId string) {
