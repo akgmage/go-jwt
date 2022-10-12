@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"context"
+	"fmt"
 	"go/token"
 	"log"
 	"os"
@@ -62,6 +63,12 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 		},
 	)
 	if err != nil {
+		msg = err.Error()
+		return
+	}
+	claims, ok := token.Claims.(*SignedDetails)
+	if !ok {
+		msg = fmt.Sprintf("INvalid token")
 		msg = err.Error()
 		return
 	}
