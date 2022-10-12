@@ -72,6 +72,11 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 		msg = err.Error()
 		return
 	}
+	if claims.ExpiresAt < time.Now().Local().Unix() {
+		msg = fmt.Sprintf("token expired")
+		msg = err.Error()
+	}
+	return claims, msg
 }
 
 func UpdateAllTokens(signedToken string, signedRefreshToken string, userId string) {
