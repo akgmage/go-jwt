@@ -21,6 +21,8 @@ import (
 
 var userCollection *mongo.Collection = database.OpenCollection(database.Client, "user")
 var validate = validator.New()
+
+/// HashPassword function returns the bcrypt hash of the [password] at the given cost
 func HashPassword(password string) string {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	if err != nil {
